@@ -1,9 +1,3 @@
-.colors-dark .entry-content a.button,
-.colors-dark .entry-content a.button:hover,
-.colors-dark .entry-content a.button:focus {
-  box-shadow: unset;
-}
-
 .button {
     padding: 15px 32px;
     text-align: center;
