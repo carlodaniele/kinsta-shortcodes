@@ -1,0 +1,47 @@
+.colors-dark .entry-content a.button,
+.colors-dark .entry-content a.button:hover,
+.colors-dark .entry-content a.button:focus {
+  box-shadow: unset;
+}
+
+.button {
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.rounded {
+  border-radius: 8px;
+}
+
+.green {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+}
+
+.blue {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+}
+
+.red {
+  background-color: #f44336;
+  border: none;
+  color: white;
+}
+
+.gray {
+  background-color: #e7e7e7; 
+  border: none;
+  color: black;
+}
+
+.black {
+  background-color: #555555;
+  border: none;
+  color: white;
+}
