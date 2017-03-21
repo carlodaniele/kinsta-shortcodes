@@ -49,7 +49,7 @@
 						var corners = e.data.btn_corners == true ? ' rounded' : '';
 						var color = e.data.btn_color;
 						var css_class = ' class="' + color + corners + '"';
-						editor.insertContent('[' + tag + href + css_class + label + ']')
+						editor.insertContent('[' + tag + href + id + css_class + label + ']')
 					}
 				})
 			}
