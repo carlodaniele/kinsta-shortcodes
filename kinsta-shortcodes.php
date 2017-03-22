@@ -114,8 +114,11 @@ add_action( 'admin_print_footer_scripts', 'kinsta_editor_button' );
  */
 function kinsta_enqueue_scripts() {
 	global $post;
+
+	$has_shortcode = has_shortcode( $post->post_content, 'kinsta_btn') || has_shortcode( $post->post_content, 'kinsta_btn_adv');
+	
 	// see https://codex.wordpress.org/Function_Reference/has_shortcode
-	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'kinsta_btn') ) {
+	if( is_a( $post, 'WP_Post' ) && $has_shortcode ) {
 		// see https://codex.wordpress.org/Function_Reference/plugin_dir_url
 		wp_register_style( 'kinsta-stylesheet',  plugin_dir_url( __FILE__ ) . 'css/style.css' );
 		// see https://developer.wordpress.org/reference/functions/wp_enqueue_style/
