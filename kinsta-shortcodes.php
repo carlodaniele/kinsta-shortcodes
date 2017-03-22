@@ -122,7 +122,7 @@ function kinsta_enqueue_scripts() {
 		// see https://codex.wordpress.org/Function_Reference/plugin_dir_url
 		wp_register_style( 'kinsta-stylesheet',  plugin_dir_url( __FILE__ ) . 'css/style.css' );
 		// see https://developer.wordpress.org/reference/functions/wp_enqueue_style/
-    	wp_enqueue_style( 'kinsta-stylesheet' );
+    		wp_enqueue_style( 'kinsta-stylesheet' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'kinsta_enqueue_scripts');
