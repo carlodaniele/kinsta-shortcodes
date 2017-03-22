@@ -40,7 +40,7 @@ function kinsta_button( $atts ){
 	
 	extract( shortcode_atts(
 			array(
-				'href'		=> '#',
+				'href'		=> '',
 				'id'		=> '',
 				'class'		=> 'green',
 				'target'	=> '',
@@ -51,12 +51,12 @@ function kinsta_button( $atts ){
 		) );
 
 	if( in_array( $target, array( '_blank', '_self', '_parent', '_top' ) ) ){
-		$link_target = ' target="' . $target . '"';
+		$link_target = ' target="' . esc_attr( $target ) . '"';
 	}else{
 		$link_target = '';
 	}
 
-	$output = '<p><a href="' . esc_url( $href ) . '" id="' . $id . '" class="button ' . $class . '"' . $link_target . '>' . $label . '</a></p>';
+	$output = '<p><a href="' . esc_url( $href ) . '" id="' . esc_attr( $id ) . '" class="button ' . esc_attr( $class ) . '"' . $link_target . '>' . esc_attr( $label ) . '</a></p>';
 	return $output;
 }
 
@@ -67,7 +67,7 @@ function kinsta_button_adv( $atts, $content = null, $tag = '' ){
 
 	extract( shortcode_atts(
 			array(
-				'href'		=> '#',
+				'href'		=> '',
 				'id'		=> '',
 				'class'		=> 'green',
 				'target'	=> ''
@@ -77,12 +77,13 @@ function kinsta_button_adv( $atts, $content = null, $tag = '' ){
 		) );
 
 	if( in_array( $target, array( '_blank', '_self', '_parent', '_top' ) ) ){
-		$link_target = ' target="' . $target . '"';
+		$link_target = ' target="' . esc_attr( $target ) . '"';
 	}else{
 		$link_target = '';
 	}
 
-	$output = '<p><a href="' . esc_url( $href ) . '" id="' . $id . '" class="button ' . $class . '"' . $link_target . '>' . $content . '</a></p>';
+
+	$output = '<p><a href="' . esc_url( $href ) . '" id="' . esc_attr( $id ) . '" class="button ' . esc_attr( $class ) . '"' . $link_target . '>' . esc_attr( $content ) . '</a></p>';
 	return $output;
 }
 
@@ -122,7 +123,7 @@ function kinsta_enqueue_scripts() {
 		// see https://codex.wordpress.org/Function_Reference/plugin_dir_url
 		wp_register_style( 'kinsta-stylesheet',  plugin_dir_url( __FILE__ ) . 'css/style.css' );
 		// see https://developer.wordpress.org/reference/functions/wp_enqueue_style/
-    		wp_enqueue_style( 'kinsta-stylesheet' );
+		wp_enqueue_style( 'kinsta-stylesheet' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'kinsta_enqueue_scripts');
