@@ -24,6 +24,7 @@ Author URI: http://carlodaniele.it/en/
 function kinsta_shortcodes_init(){
 	add_shortcode( 'kinsta_btn', 'kinsta_button' );
 	add_shortcode( 'kinsta_btn_adv', 'kinsta_button_adv' );
+	add_shortcode( 'kinsta_usr', 'kinsta_username' );
 }
 add_action('init', 'kinsta_shortcodes_init');
 
@@ -142,3 +143,42 @@ function kinsta_register_mce_plugin( $plugin_array ) {
 }
 // Load the TinyMCE plugin
 add_filter( 'mce_external_plugins', 'kinsta_register_mce_plugin' );
+
+
+
+/**
+ * Register a shortcode
+ *
+ * @param array $atts Array of shortcode attributes
+ */
+function kinsta_username( $atts = array() ){
+
+	$id = get_current_user_id();
+	$user = get_userdata( $id );
+	
+	return $user->user_login;
+}
+
+/**
+ * Filters all menu items
+ *
+ * @param WP_Post[] $menu_items All of the nave menu items, sorted for display.
+ *
+ * @return WP_Post[] The filtered menu items.
+ */
+function kinsta_dynamic_menu_items( $menu_items ) {
+
+	global $shortcode_tags;
+
+	foreach ( $menu_items as $menu_item ) {
+
+		if ( has_shortcode( $menu_item->title, 'kinsta_usr' ) && isset( $shortcode_tags['kinsta_usr'] ) ){
+
+				$menu_item->title = do_shortcode( $menu_item->title, '[kinsta_usr]' );
+
+		}
+	}
+
+    return $menu_items;
+}
+add_filter( 'wp_nav_menu_objects', 'kinsta_dynamic_menu_items' );
