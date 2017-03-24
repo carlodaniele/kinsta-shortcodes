@@ -161,12 +161,11 @@ function kinsta_dynamic_menu_items( $menu_items ) {
 
 			$menu_item->title = do_shortcode( $menu_item->title, '[kinsta_usr]' );
 
-		}
+			if ( 0 == get_current_user_id() ){
 
-		if ( 0 == get_current_user_id() ){
-
-			$menu_item->url = wp_login_url();
-		
+				$menu_item->url = wp_login_url();
+			
+			}
 		}
 	}
 	return $menu_items;
