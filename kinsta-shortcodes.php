@@ -88,27 +88,6 @@ function kinsta_button_adv( $atts, $content = null, $tag = '' ){
 	return $output;
 }
 
-function kinsta_editor_button(){
-	if ( wp_script_is( 'quicktags' ) ) {
-		?>
-		<script type="text/javascript">
-
-		QTags.addButton( 'kbtn', 'k-button', kinsta_print_btn, '', '', 'Kinsta Button', 999 );
-
-		function kinsta_print_btn(){
-			var label = prompt( 'Button label:', '' );
-
-			if ( label && label !== '' ) {
-				QTags.insertContent('[kinsta_btn_adv href="" id="" class="" target=""]' + label + '[/kinsta_btn_adv]' );
-			}
-		}
-		</script>
-		<?php
-	}
-}
-add_action( 'admin_print_footer_scripts', 'kinsta_editor_button' );
-
-
 /**
  * Enqueue scripts and styles
  *
@@ -154,17 +133,23 @@ add_filter( 'mce_external_plugins', 'kinsta_register_mce_plugin' );
 function kinsta_username( $atts = array() ){
 
 	$id = get_current_user_id();
-	$user = get_userdata( $id );
 	
-	return $user->user_login;
+	if ( 0 == $id ) {
+		// Not logged in
+		return __( 'Guest' );
+	} else {
+		// Logged in
+		$user = get_userdata( $id );
+		return $user->user_login;
+	}
 }
 
 /**
- * Filters all menu items
+ * Filters all menu item URLs for a #placeholder#. http://stackoverflow.com/questions/11403189/how-to-insert-shortcode-into-wordpress-menu
  *
  * @param WP_Post[] $menu_items All of the nave menu items, sorted for display.
  *
- * @return WP_Post[] The filtered menu items.
+ * @return WP_Post[] The menu items with any placeholders properly filled in.
  */
 function kinsta_dynamic_menu_items( $menu_items ) {
 
@@ -174,11 +159,16 @@ function kinsta_dynamic_menu_items( $menu_items ) {
 
 		if ( has_shortcode( $menu_item->title, 'kinsta_usr' ) && isset( $shortcode_tags['kinsta_usr'] ) ){
 
-				$menu_item->title = do_shortcode( $menu_item->title, '[kinsta_usr]' );
+			$menu_item->title = do_shortcode( $menu_item->title, '[kinsta_usr]' );
 
 		}
-	}
 
-    return $menu_items;
+		if ( 0 == get_current_user_id() ){
+
+			$menu_item->url = wp_login_url();
+		
+		}
+	}
+	return $menu_items;
 }
 add_filter( 'wp_nav_menu_objects', 'kinsta_dynamic_menu_items' );
